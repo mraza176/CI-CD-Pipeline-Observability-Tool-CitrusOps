@@ -1,0 +1,94 @@
+version: "3.8"
+services:
+  # This is Client Service
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    network_mode: host
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    depends_on:
+      - web-app
+  web-app:
+    build:
+      context: ./server/ArgoCD/ArgoCD-Web-App
+      dockerfile: Dockerfile
+    network_mode: "host"
+    restart: always
+    volumes:
+      - ./server/ArgoCD/ArgoCD-Web-App:/app
+    depends_on:
+      - mongo
+  # This is Gitlab Service
+  gitlab-web-app:
+    build:
+      context: ./server/GitLab/GitLab-Web-App
+      dockerfile: Dockerfile
+    network_mode: "host"
+    restart: always
+    volumes:
+      - ./server/GitLab/GitLab-Web-App:/app
+    depends_on:
+      - mongo
+  cronjob:
+    build:
+      context: ./server/ArgoCD/ArgoCD-Monitor-Cronjob
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - mongo
+      - redis
+  notification:
+    build:
+      context: ./server/ArgoCD/Notifications
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - mongo
+      - nats
+  slack:
+    build:
+      context: ./server/ArgoCD/Slack
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - mongo
+      - nats
+  email:
+    build:
+      context: ./server/ArgoCD/Email
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - mongo
+      - nats
+  mongo: # mongosh --username mongouser --password mongopassword
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopassword
+    volumes:
+      - mongo_test:/data/db
+    restart: always
+    network_mode: host # Use the host network mode
+
+  redis:
+    image: "redis:7.2.3-alpine"
+    restart: always
+    network_mode: host # Use the host network mode
+
+  nats:
+    image: nats:latest
+    restart: always
+    network_mode: host # Use the host network mode
+
+volumes:
+  mongo_test:

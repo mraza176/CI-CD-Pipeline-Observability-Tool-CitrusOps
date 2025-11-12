@@ -1,0 +1,32 @@
+name: CI - Email
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'app/server/ArgoCD/Email/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'app/server/ArgoCD/Email/**'
+      
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.21
+
+      - name: Build Packages
+        working-directory: ./app/server/ArgoCD/Email
+        run: go build -v ./...     
+      
+      - name: Build Docker Image
+        working-directory: ./app/server/ArgoCD/Email
+        run: docker build . --file Dockerfile --tag email 

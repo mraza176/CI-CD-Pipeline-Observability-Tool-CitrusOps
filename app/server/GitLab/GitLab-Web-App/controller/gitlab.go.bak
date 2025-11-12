@@ -1,0 +1,117 @@
+package controller
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+// GitLabPipeline represents a GitLab pipeline
+type GitLabPipeline struct {
+	ID     int    `json:"id"`
+	Status string `json:"status"`
+	Ref    string `json:"ref"`
+	SHA    string `json:"sha"`
+	WebURL string `json:"web_url"`
+}
+
+// GitLabProject represents a GitLab project
+type GitLabProject struct {
+	ID                int    `json:"id"`
+	Name              string `json:"name"`
+	NameWithNamespace string `json:"name_with_namespace"`
+	WebURL            string `json:"web_url"`
+}
+
+// GetGitLabPipelines fetches all pipelines from GitLab
+func GetGitLabPipelines(c *gin.Context) {
+	config, err := GetGitLabConfig()
+	if err != nil {
+		log.Printf("Error getting GitLab config: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve GitLab configuration"})
+		return
+	}
+
+	if config.URL == "" || config.Token == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "GitLab is not configured yet"})
+		return
+	}
+
+	// This is a placeholder implementation
+	// In a real implementation, this would make an API call to GitLab using the config.URL and config.Token
+	// Example: GET {config.URL}/api/v4/projects/{projectID}/pipelines with Authorization: Bearer {config.Token}
+
+	// Example data
+	pipelines := []GitLabPipeline{
+		{ID: 1856940408, Status: "failed", Ref: "main", SHA: "9a152d3c", WebURL: fmt.Sprintf("%s/faisalbutt.dev-group/fyp-demo/-/pipelines/1856940408", config.URL)},
+		{ID: 1856940409, Status: "success", Ref: "feature", SHA: "def456", WebURL: fmt.Sprintf("%s/faisalbutt.dev-group/fyp-demo/-/pipelines/1856940409", config.URL)},
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"pipelines": pipelines,
+	})
+}
+
+// GetGitLabPipeline fetches a specific pipeline from GitLab
+func GetGitLabPipeline(c *gin.Context) {
+	config, err := GetGitLabConfig()
+	if err != nil {
+		log.Printf("Error getting GitLab config: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve GitLab configuration"})
+		return
+	}
+
+	if config.URL == "" || config.Token == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "GitLab is not configured yet"})
+		return
+	}
+
+	pipelineID := c.Param("id")
+
+	// This is a placeholder implementation
+	// In a real implementation, this would make an API call to GitLab using the config.URL and config.Token
+	// Example: GET {config.URL}/api/v4/projects/{projectID}/pipelines/{pipelineID} with Authorization: Bearer {config.Token}
+
+	pipeline := GitLabPipeline{
+		ID:     1856940408,
+		Status: "failed",
+		Ref:    "main",
+		SHA:    "9a152d3c",
+		WebURL: fmt.Sprintf("%s/faisalbutt.dev-group/fyp-demo/-/pipelines/%s", config.URL, pipelineID),
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"pipeline": pipeline,
+	})
+}
+
+// GetGitLabProjects fetches all projects from GitLab
+func GetGitLabProjects(c *gin.Context) {
+	config, err := GetGitLabConfig()
+	if err != nil {
+		log.Printf("Error getting GitLab config: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve GitLab configuration"})
+		return
+	}
+
+	if config.URL == "" || config.Token == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "GitLab is not configured yet"})
+		return
+	}
+
+	// This is a placeholder implementation
+	// In a real implementation, this would make an API call to GitLab using the config.URL and config.Token
+	// Example: GET {config.URL}/api/v4/projects with Authorization: Bearer {config.Token}
+
+	// Example data
+	projects := []GitLabProject{
+		{ID: 1, Name: "fyp-demo", NameWithNamespace: "faisalbutt.dev-group / fyp-demo", WebURL: fmt.Sprintf("%s/faisalbutt.dev-group/fyp-demo", config.URL)},
+		{ID: 2, Name: "Project 2", NameWithNamespace: "Group / Project 2", WebURL: fmt.Sprintf("%s/group/project2", config.URL)},
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"projects": projects,
+	})
+}

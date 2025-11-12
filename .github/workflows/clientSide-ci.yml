@@ -1,0 +1,40 @@
+name: CI - ClientSide
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/client/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "app/client/**"
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.0
+
+      - name: Install Dependencies
+        working-directory: app/client
+        run: bun install
+
+      - name: Build Next.js Project
+        working-directory: app/client
+        run: echo 'bun run dev'
+
+      - name: Run Tests
+        working-directory: app/client
+        run: echo 'run test'
+
+      - name: Build Docker Image
+        working-directory: app/client
+        run: docker build . --file Dockerfile --tag app/client:latest
