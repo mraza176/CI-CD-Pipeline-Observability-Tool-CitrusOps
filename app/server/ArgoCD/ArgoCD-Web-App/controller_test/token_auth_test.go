@@ -4,22 +4,31 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
 func TokenAuth(token string) bool {
 
-	url := "https://127.0.0.1:8081/api/v1/applications"
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("Error loading .env file")
+	}
+	testUrl := os.Getenv("ARGOCD_TEST_URL")
+
+	url := testUrl
 	bearer := "Bearer " + token
 
 	req, err := http.NewRequest("GET", url, bytes.NewBuffer(nil))
 	if err != nil {
 		return false
-	}	
+	}
 
 	req.Header.Set("Authorization", bearer)
 	req.Header.Add("Accept", "application/json")

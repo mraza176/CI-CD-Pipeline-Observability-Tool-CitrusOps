@@ -71,7 +71,7 @@ func PipelineHistory(c *gin.Context) {
 
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Printf("Error loading .env file")
 	}
 
 	// Get the pipeline parameter from the query string

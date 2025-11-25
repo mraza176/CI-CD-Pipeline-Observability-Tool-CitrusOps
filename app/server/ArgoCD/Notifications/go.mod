@@ -3,6 +3,7 @@ module github.com/QuestraDigital/goServices/Notifications
 go 1.21.4
 
 require (
+	github.com/joho/godotenv v1.5.1
 	github.com/nats-io/nats.go v1.33.1
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0

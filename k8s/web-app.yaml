@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app
+  namespace: citrusops
+spec:
+  selector:
+    app: web-app
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+  namespace: citrusops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+        - name: web-app
+          image: mraza176/citrusops-web-app:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: CRONJOB_URL
+              value: "cronjob.citrusops.svc.cluster.local:50059"
+            - name: ARGOCD_TEST_URL
+              value: "http://20.6.112.49/api/v1/applications"
+            - name: MONGO_URL
+              value: "mongodb://mongouser:mongopassword@mongo.citrusops.svc.cluster.local:27017/admin?authSource=admin"
+            - name: USER_EMAIL
+              value: "f219521@cfd.nu.edu.pk"
+            - name: JWT_SECRET
+              value: "wait_a_minute"
+            - name: ARGOCD_TOKEN
+              value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcmdvY2QiLCJzdWIiOiJhZGlsMTphcGlLZXkiLCJuYmYiOjE3NjQwNjIxMzUsImlhdCI6MTc2NDA2MjEzNSwianRpIjoiYzc2ZWUyMmQtYzZlYS00NjQ3LWI0Y2ItZWYyOWRjM2FjMjAxIn0.icxgt-WwZBkKNMZSaY5_vTeUeT2-71MZkf_u69lphzI"

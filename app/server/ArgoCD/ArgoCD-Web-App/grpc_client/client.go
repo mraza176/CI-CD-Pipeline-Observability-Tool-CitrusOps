@@ -3,16 +3,19 @@ package grpcclient
 import (
 	"context"
 	"log"
+	"os"
 
 	grpc_cronjob_controller "github.com/QuestraDigital/goServices/ArgoCD-Web-App/grpc_client/protos"
+	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 )
 
-const (
-	address = "localhost:50059"
-)
-
 func TriggerCronjobService(status bool) (string, error) {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("Error loading .env file")
+	}
+	address := os.Getenv("CRONJOB_URL")
 	// Set up a connection to the server
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
@@ -41,6 +44,11 @@ func TriggerCronjobService(status bool) (string, error) {
 }
 
 func GetCronjobStatus(status bool) (bool, error) {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("Error loading .env file")
+	}
+	address := os.Getenv("CRONJOB_URL")
 	// Set up a connection to the server
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {

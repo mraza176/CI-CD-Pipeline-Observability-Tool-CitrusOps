@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification
+  namespace: citrusops
+spec:
+  selector:
+    app: notification
+  ports:
+    - port: 50055
+      targetPort: 50055
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification
+  namespace: citrusops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification
+  template:
+    metadata:
+      labels:
+        app: notification
+    spec:
+      containers:
+        - name: notification
+          image: mraza176/citrusops-notification:v1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_URL
+              value: "nats://nats.citrusops.svc.cluster.local:4222"

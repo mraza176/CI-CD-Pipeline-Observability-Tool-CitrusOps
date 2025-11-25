@@ -4,9 +4,10 @@ import (
 	"context"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"github.com/joho/godotenv"
 )
 
 // ConnectToMongoDB establishes a connection to MongoDB and returns the client.
@@ -16,7 +17,7 @@ func ConnectToMongoDB() (*mongo.Client, error) {
 	// url := "mongodb://mongouser:mongopassword@172.24.0.2:27017/admin"
 	err := godotenv.Load(".env")
 	if err != nil {
-	  log.Fatalf("Error loading .env file")
+		log.Printf("Error loading .env file")
 	}
 	url := os.Getenv("MONGO_URL")
 	clientOptions := options.Client().ApplyURI(url)

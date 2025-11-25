@@ -44,7 +44,7 @@ func GetAllPipelineNames() ([]string, error) {
 	err := godotenv.Load(".env")
 
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Printf("Error loading .env file")
 	}
 
 	// fetch thr url from mongoDB

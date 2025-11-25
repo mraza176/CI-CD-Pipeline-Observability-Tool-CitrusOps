@@ -50,7 +50,9 @@ export default function Dashboard() {
 
     fetchPipelineData();
     // Web Socket Connection
-    const ws = new WebSocket("ws://localhost:8000/pipeline_state");
+    const ws = new WebSocket(
+      `${process.env.NEXT_PUBLIC_BACKEND_WS_URL}/pipeline_state`
+    );
 
     // On connection open sending data(pipeline name)
     ws.onopen = () => {

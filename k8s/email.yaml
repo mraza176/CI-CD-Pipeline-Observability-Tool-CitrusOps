@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email
+  namespace: citrusops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email
+  template:
+    metadata:
+      labels:
+        app: email
+    spec:
+      containers:
+        - name: email
+          image: mraza176/citrusops-email:v3
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_URL
+              value: "nats://nats.citrusops.svc.cluster.local:4222"
+            - name: SMTP_SERVER
+              value: "smtp.gmail.com"
+            - name: SMTP_PORT
+              value: "465"
+            - name: MONGO_URL
+              value: "mongodb://mongouser:mongopassword@mongo.citrusops.svc.cluster.local:27017/admin?authSource=admin"

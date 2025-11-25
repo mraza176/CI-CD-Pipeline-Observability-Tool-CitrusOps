@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 
 	mongoconnection "github.com/QuestraDigital/goServices/Slack/mongoConnection"
+	"github.com/joho/godotenv"
 	"github.com/nats-io/nats.go"
 	"github.com/slack-go/slack"
 	"go.mongodb.org/mongo-driver/bson"
@@ -71,8 +73,12 @@ func sendMessageToSlack(messageText string) error {
 }
 
 func main() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("Error loading .env file")
+	}
 	// Connect to NATS server
-	nc, err := nats.Connect(nats.DefaultURL)
+	nc, err := nats.Connect(os.Getenv("NATS_URL"))
 	if err != nil {
 		log.Fatal(err)
 	}

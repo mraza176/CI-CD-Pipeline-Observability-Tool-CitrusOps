@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: citrusops-config
+  namespace: citrusops
+data:
+  MONGODB_HOST: "mongo"
+  MONGODB_PORT: "27017"
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  NATS_HOST: "nats"
+  NATS_PORT: "4222"
+  WEB_APP_PORT: "8080"
+  GITLAB_WEB_APP_PORT: "8081"
+  CLIENT_PORT: "3000"

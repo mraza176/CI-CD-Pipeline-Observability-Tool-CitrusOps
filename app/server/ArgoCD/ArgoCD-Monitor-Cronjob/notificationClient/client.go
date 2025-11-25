@@ -3,16 +3,19 @@ package notificationClient
 import (
 	"context"
 	"log"
+	"os"
 
 	notifications "github.com/QuestraDigital/goServices/ArgoCD-Monitor-Cronjob/notificationClient/protos"
+	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 )
 
-const (
-	address = "localhost:50055"
-)
-
 func TriggerNotificationService(customMessage string) {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("Error loading .env file")
+	}
+	address := os.Getenv("NOTIFICATION_SERVICE_URL")
 	// Set up a connection to the server
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {

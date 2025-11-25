@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slack
+  namespace: citrusops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slack
+  template:
+    metadata:
+      labels:
+        app: slack
+    spec:
+      containers:
+        - name: slack
+          image: mraza176/citrusops-slack:v3
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_URL
+              value: "nats://nats.citrusops.svc.cluster.local:4222"
+            - name: MONGO_URL
+              value: "mongodb://mongouser:mongopassword@mongo.citrusops.svc.cluster.local:27017/admin?authSource=admin"

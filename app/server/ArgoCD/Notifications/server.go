@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 
 	notifications "github.com/QuestraDigital/goServices/Notifications/protos"
+	"github.com/joho/godotenv"
 	"github.com/nats-io/nats.go"
 	"google.golang.org/grpc"
 )
 
 const (
 	port             = ":50055"
-	natsURL          = nats.DefaultURL
 	natsSubjectSlack = "slack"
 	natsSubjectEmail = "email"
 )
@@ -27,11 +28,11 @@ type server struct {
 // Initialize NATS connection
 func initNATS() error {
 	var err error
-	nc, err = nats.Connect(natsURL)
+	nc, err = nats.Connect(os.Getenv("NATS_URL"))
 	if err != nil {
 		return fmt.Errorf("failed to connect to NATS server: %v", err)
 	}
-	log.Println("Connected to NATS server:", natsURL)
+	log.Println("Connected to NATS server:", os.Getenv("NATS_URL"))
 	return nil
 }
 
@@ -61,6 +62,10 @@ func (s *server) SendNotification(ctx context.Context, req *notifications.Notifi
 }
 
 func main() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Printf("Error loading .env file")
+	}
 	if err := initNATS(); err != nil {
 		log.Fatalf("Failed to initialize NATS: %v", err)
 	}

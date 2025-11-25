@@ -129,7 +129,7 @@ func sendEmailToUser(messageText string) error {
 
 func main() {
 	// Connect to NATS server
-	nc, err := nats.Connect(nats.DefaultURL)
+	nc, err := nats.Connect(os.Getenv("NATS_URL"))
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -75,7 +75,7 @@ func InitializePipelineCounter() {
 func init() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Printf("Error loading .env file")
 	}
 	REDIS_URL := os.Getenv("REDIS_URL")
 	// Initialize Redis client
@@ -282,7 +282,7 @@ func updateCounter(isPipelineHealthy bool, pipelineName string, summary HealthSu
 		if val == deviationValue {
 			fmt.Println("Sending Notification..........")
 			collection := mongoClient.Database("admin").Collection("custom_messages")
-	        ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+			ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 			filter := bson.M{"value": bson.M{"$exists": true}}
 			var result bson.M
 			collection.FindOne(ctx, filter).Decode(&result)

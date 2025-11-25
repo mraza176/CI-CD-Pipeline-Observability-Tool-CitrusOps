@@ -17,7 +17,7 @@ func ConnectToMongoDB() (*mongo.Client, error) {
 	// url := "mongodb://mongouser:mongopassword@172.24.0.2:27017/admin"
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatalf("Error loading .env file")
+		log.Printf("Error loading .env file")
 	}
 	url := os.Getenv("MONGO_URL")
 	clientOptions := options.Client().ApplyURI(url)
