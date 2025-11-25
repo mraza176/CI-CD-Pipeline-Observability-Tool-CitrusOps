@@ -42,7 +42,7 @@ export default function PipelineHistory() {
 
   // Calculate success/failure metrics
   const metrics = useMemo(() => {
-    if (history.length === 0)
+    if (history?.length === 0)
       return {
         successRate: 0,
         failureRate: 0,
@@ -51,12 +51,12 @@ export default function PipelineHistory() {
         failureCount: 0,
       };
 
-    const successCount = history.filter((item) =>
+    const successCount = history?.filter((item) =>
       Object.values(item.summary).every((status) => status === "Healthy")
     ).length;
 
-    const failureCount = history.length - successCount;
-    const totalDeployments = history.length;
+    const failureCount = history?.length - successCount;
+    const totalDeployments = history?.length;
     const successRate = (successCount / totalDeployments) * 100;
     const failureRate = 100 - successRate;
 
@@ -72,7 +72,7 @@ export default function PipelineHistory() {
   // Prepare chart data
   const chartData = useMemo(() => {
     return history
-      .map((item, index) => {
+      ?.map((item, index) => {
         const isHealthy = Object.values(item.summary).every(
           (status) => status === "Healthy"
         );
@@ -199,7 +199,7 @@ export default function PipelineHistory() {
       </div>
 
       {/* Timeline Chart */}
-      {history.length > 0 && (
+      {history?.length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle>Deployment Timeline</CardTitle>
@@ -299,7 +299,7 @@ export default function PipelineHistory() {
           </p>
         </CardHeader>
         <CardContent>
-          {history.length === 0 ? (
+          {history?.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               No deployment history found
             </div>
@@ -316,7 +316,7 @@ export default function PipelineHistory() {
                   </tr>
                 </thead>
                 <tbody>
-                  {history.map((item, index) => (
+                  {history?.map((item, index) => (
                     <tr key={index} className="border-b hover:bg-muted/50">
                       <td className="p-2">
                         <div className="flex items-center gap-2">
