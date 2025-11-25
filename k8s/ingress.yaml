@@ -9,17 +9,9 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: citrusops.local
-      http:
+    - http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: client
-                port:
-                  number: 3000
-          - path: /
+          - path: /api/argocd
             pathType: Prefix
             backend:
               service:
@@ -30,6 +22,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: gitlab-web-app
+                name: client
                 port:
-                  number: 8001
+                  number: 3000
