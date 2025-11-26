@@ -46,22 +46,22 @@ export default function PipelineFailRate({ history }: any) {
       return { successCount, failureCount, total, failureRate, rateLevel };
     }, [history]);
 
-  const getRateLevelConfig = (level: string) => {
-    switch (level) {
-      case "critical":
-        return { color: "bg-red-600", textColor: "text-red-600" };
-      case "high":
-        return { color: "bg-red-500", textColor: "text-red-500" };
-      case "moderate":
-        return { color: "bg-orange-500", textColor: "text-orange-500" };
-      case "excellent":
-        return { color: "bg-red-400", textColor: "text-red-400" };
-      default:
-        return { color: "bg-gray-500", textColor: "text-gray-600" };
-    }
-  };
+  // const getRateLevelConfig = (level: string) => {
+  //   switch (level) {
+  //     case "critical":
+  //       return { color: "bg-red-600", textColor: "text-red-600" };
+  //     case "high":
+  //       return { color: "bg-red-500", textColor: "text-red-500" };
+  //     case "moderate":
+  //       return { color: "bg-orange-500", textColor: "text-orange-500" };
+  //     case "excellent":
+  //       return { color: "bg-red-400", textColor: "text-red-400" };
+  //     default:
+  //       return { color: "bg-gray-500", textColor: "text-gray-600" };
+  //   }
+  // };
 
-  const levelConfig = getRateLevelConfig(rateLevel);
+  // const levelConfig = getRateLevelConfig(rateLevel);
 
   // Handle empty state
   if (!history || history.length === 0) {

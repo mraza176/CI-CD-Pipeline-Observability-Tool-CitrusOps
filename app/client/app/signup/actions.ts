@@ -1,9 +1,7 @@
 "use server";
 
-import { z } from "zod";
-import { createSession } from "../lib/session";
-import { redirect } from "next/navigation";
 import instance from "@/axios";
+import { z } from "zod";
 
 const signupSchema = z
   .object({

@@ -22,6 +22,7 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
+import Image from "next/image";
 import {
   Bar,
   BarChart,
@@ -620,7 +621,7 @@ const AuthorActivityChart = forwardRef<any, { data: any }>(({ data }, ref) => {
                 {/* Avatar */}
                 <div className="relative">
                   {author.avatar ? (
-                    <img
+                    <Image
                       src={author.avatar}
                       alt={author.author}
                       className="w-12 h-12 rounded-full ring-2 ring-border group-hover:ring-[#FB6107]/30 transition-all duration-200"

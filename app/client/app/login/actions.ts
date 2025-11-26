@@ -1,9 +1,9 @@
 "use server";
 
 import instance from "@/axios";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createSession, deleteSession } from "../lib/session";
-import { redirect } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }).trim(),

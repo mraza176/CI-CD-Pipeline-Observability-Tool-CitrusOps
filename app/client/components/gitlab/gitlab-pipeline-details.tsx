@@ -20,6 +20,7 @@ import {
   User,
   XCircle,
 } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import JobDetails from "./gitlab-pipeline-job-detail";
@@ -29,7 +30,6 @@ export default function PipelineDetails({ pipelineId }: any) {
   const [jobs, setJobs] = useState([]);
   const [testSummary, setTestSummary] = useState<any>(null);
   const [variables, setVariables] = useState([]);
-  const [activeTab, setActiveTab] = useState("details");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -329,7 +329,7 @@ export default function PipelineDetails({ pipelineId }: any) {
                   {details.user ? (
                     <div className="flex items-center space-x-3">
                       {details.user.avatar_url && (
-                        <img
+                        <Image
                           src={details.user.avatar_url}
                           alt={details.user.name}
                           className="w-10 h-10 rounded-full"

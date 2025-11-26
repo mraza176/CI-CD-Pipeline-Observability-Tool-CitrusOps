@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AlertCircle, CheckCircle, TrendingUp } from "lucide-react";
+import { CheckCircle, TrendingUp } from "lucide-react";
 import { useMemo } from "react";
 
 export default function PipelineSuccessRate({ history }: any) {
@@ -46,43 +46,42 @@ export default function PipelineSuccessRate({ history }: any) {
       return { successCount, failureCount, total, successRate, rateLevel };
     }, [history]);
 
-  const getRateLevelConfig = (level: string) => {
-    switch (level) {
-      case "excellent":
-        return {
-          color: "bg-green-500",
-          textColor: "text-green-600",
-          icon: CheckCircle,
-        };
-      case "good":
-        return {
-          color: "bg-blue-500",
-          textColor: "text-blue-600",
-          icon: CheckCircle,
-        };
-      case "fair":
-        return {
-          color: "bg-yellow-500",
-          textColor: "text-yellow-600",
-          icon: AlertCircle,
-        };
-      case "low":
-        return {
-          color: "bg-red-500",
-          textColor: "text-red-600",
-          icon: AlertCircle,
-        };
-      default:
-        return {
-          color: "bg-gray-500",
-          textColor: "text-gray-600",
-          icon: AlertCircle,
-        };
-    }
-  };
+  // const getRateLevelConfig = (level: string) => {
+  //   switch (level) {
+  //     case "excellent":
+  //       return {
+  //         color: "bg-green-500",
+  //         textColor: "text-green-600",
+  //         icon: CheckCircle,
+  //       };
+  //     case "good":
+  //       return {
+  //         color: "bg-blue-500",
+  //         textColor: "text-blue-600",
+  //         icon: CheckCircle,
+  //       };
+  //     case "fair":
+  //       return {
+  //         color: "bg-yellow-500",
+  //         textColor: "text-yellow-600",
+  //         icon: AlertCircle,
+  //       };
+  //     case "low":
+  //       return {
+  //         color: "bg-red-500",
+  //         textColor: "text-red-600",
+  //         icon: AlertCircle,
+  //       };
+  //     default:
+  //       return {
+  //         color: "bg-gray-500",
+  //         textColor: "text-gray-600",
+  //         icon: AlertCircle,
+  //       };
+  //   }
+  // };
 
-  const levelConfig = getRateLevelConfig(rateLevel);
-  const Icon = levelConfig.icon;
+  // const levelConfig = getRateLevelConfig(rateLevel);
 
   // Handle empty state
   if (!history || history.length === 0) {

@@ -35,6 +35,6 @@ spec:
             - containerPort: 3000
           env:
             - name: NEXT_PUBLIC_BACKEND_URL
-              value: "http://20.247.236.94/api/argocd"
+              value: "http://20.6.65.84:8000"
             - name: NEXT_PUBLIC_BACKEND_WS_URL
-              value: "ws://20.247.236.94/api/argocd"
+              value: "ws://20.6.65.84:8000"

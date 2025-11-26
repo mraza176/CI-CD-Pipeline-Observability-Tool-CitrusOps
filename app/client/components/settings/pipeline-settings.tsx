@@ -121,7 +121,7 @@ export default function PipelineSettings() {
         custom_message: pipelineSettings.customNotificationMessage,
       });
       toast.success("Pipeline settings updated successfully!");
-    } catch (error) {
+    } catch {
       toast.error("Failed to update pipeline settings.");
     }
   };

@@ -90,7 +90,7 @@ export default function SlackConfiguration() {
             />
             <p className="text-xs text-muted-foreground">
               The Slack channel ID where notifications will be sent (starts with
-              'C')
+              &apos;C&apos;)
             </p>
           </div>
 
@@ -124,7 +124,8 @@ export default function SlackConfiguration() {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground">
-              Bot User OAuth Token from your Slack app (starts with 'xoxb-')
+              Bot User OAuth Token from your Slack app (starts with
+              &apos;xoxb-&apos;)
             </p>
           </div>
 

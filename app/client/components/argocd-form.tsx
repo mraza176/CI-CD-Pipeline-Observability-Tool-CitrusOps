@@ -19,7 +19,7 @@ function ArgocdForm() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   useEffect(() => {
     if (data) {

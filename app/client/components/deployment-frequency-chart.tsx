@@ -49,7 +49,7 @@ export default function DeploymentFrequencyChart({
   history,
 }: DeploymentFrequencyChartProps) {
   // Transform data for Recharts
-  const { chartData, avgDeployments, totalDeployments } = useMemo(() => {
+  const { chartData, avgDeployments } = useMemo(() => {
     if (!history || history.length === 0)
       return { chartData: [], avgDeployments: 0, totalDeployments: 0 };
 

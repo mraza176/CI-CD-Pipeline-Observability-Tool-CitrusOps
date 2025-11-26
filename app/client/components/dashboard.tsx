@@ -44,7 +44,6 @@ export default function Dashboard() {
       console.log("Error fetching pipeline data:", error.message);
     }
   }
-
   useEffect(() => {
     setPipelineName(searchParams.get("pipeline") as string);
 
@@ -120,7 +119,7 @@ export default function Dashboard() {
                 params: { pipeline },
               });
               return { pipeline, history: res.data };
-            } catch (e) {
+            } catch {
               return { pipeline, history: [] };
             }
           })
@@ -161,7 +160,7 @@ export default function Dashboard() {
         });
         setMostRecentFailed(mostRecent);
         setTopFailedPipeline(topFailed.pipeline ? topFailed : null);
-      } catch (e) {
+      } catch {
         setMostRecentFailed(null);
         setTopFailedPipeline(null);
       }
