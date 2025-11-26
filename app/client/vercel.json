@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/:path((?!_next/|static/).*)",
+      "destination": "http://20.6.65.84:8000/:path"
+    }
+  ]
+}
