@@ -9,6 +9,8 @@ spec:
   ports:
     - port: 8000
       targetPort: 8000
+    - port: 3000
+      targetPort: 3000
   type: LoadBalancer
 
 ---
@@ -46,3 +48,13 @@ spec:
               value: "wait_a_minute"
             - name: ARGOCD_TOKEN
               value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhcmdvY2QiLCJzdWIiOiJhZGlsMTphcGlLZXkiLCJuYmYiOjE3NjQwNjIxMzUsImlhdCI6MTc2NDA2MjEzNSwianRpIjoiYzc2ZWUyMmQtYzZlYS00NjQ3LWI0Y2ItZWYyOWRjM2FjMjAxIn0.icxgt-WwZBkKNMZSaY5_vTeUeT2-71MZkf_u69lphzI"
+        - name: client
+          image: mraza176/citrusops-client:v3
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NEXT_PUBLIC_BACKEND_URL
+              value: "http://20.6.65.84:8000"
+            - name: NEXT_PUBLIC_BACKEND_WS_URL
+              value: "ws://20.6.65.84:8000"
